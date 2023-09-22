@@ -1,4 +1,4 @@
-# DocPrepTools
+# DocProcessors
 
 O repositório DocProcessor contém uma coleção de ferramentas e utilitários para o pré-processamento de documentos textuais. Essas ferramentas são projetadas para facilitar a limpeza, formatação e transformação de documentos em texto bruto em formatos mais adequados para análise textual e mineração de dados.
 Além disso, o repositório também vai ajudar a classificação desses documentos. 
