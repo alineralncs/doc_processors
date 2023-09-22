@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "doc-processors"
+version = "0.1.0"
+description = ""
+authors = ["Aline Rose <aline.rose@mail.uft.edu.br>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.103.1"
+uvicorn = "^0.23.2"
+pypdf2 = "^3.0.1"
+spacy = "^3.6.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
