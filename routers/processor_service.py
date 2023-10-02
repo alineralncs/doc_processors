@@ -73,12 +73,13 @@ class ProcessorService:
             self.extract_text()
         datas = []
         date_pattern = r"palmas\s\d+\s[a-zA-Z]+\s\d{4}"
-        date_pattern_new_documents = r"resolução nº \d+ \d{2} [A-Za-z]+ \d{4}"
+        date_pattern_new_documents = r"\d+ (\d{1,2}) ([a-zA-Z]+) (\d{4})"
 
         documents = text.split("\n")
         for document in documents:
             match = re.search(date_pattern_new_documents, document) or re.search(date_pattern, document)
             print(match)
+
             if match:
                 # verificar demais grupos
                 day = match.group().split(" ")[1]
