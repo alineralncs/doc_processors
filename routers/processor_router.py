@@ -3,6 +3,7 @@ import os
 
 from docarray import Document, DocumentArray
 from fastapi import APIRouter
+from tinydb import TinyDB, Query
 
 from .processor_service import ProcessorService
 
@@ -12,9 +13,8 @@ router = APIRouter()
 def get_all_documents():
     with open('db.json', 'r') as db:
         db = json.load(db)
+        return db
     
-    return {"db": db}
-
 @router.get("/preprocess")
 def preprocess_documents():
     root_directory = "documents_new"
@@ -32,8 +32,8 @@ def preprocess_documents():
                     doc_array = DocumentArray()
                     doc_array.append(Document(path=pdf_path))
 
-                    processor_service = ProcessorService(doc_array)
+                    processor_service = ProcessorService(doc_array, pdf_path)
 
                     results.append(processor_service.combination())
-
+                    
     return {"results": results}

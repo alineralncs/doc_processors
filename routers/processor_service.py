@@ -9,10 +9,11 @@ nlp = spacy.load("pt_core_news_sm")
 
 
 class ProcessorService:
-    def __init__(self, doc_array: DocumentArray):
+    def __init__(self, doc_array: DocumentArray, pdf_path):
         self.doc_array = doc_array  # path to the pdf file
         self.text = ""
         self.db = TinyDB('db.json')
+        self.pdf_path = pdf_path
 
     def extract_text(self) -> str:
         for document in self.doc_array:
@@ -151,10 +152,17 @@ class ProcessorService:
             return None
 
     def combination(self):
-        empty_pdfinfo = []
+
+        # Verificando se o documento já existe.
+        query = Query()
+
+        if self.db.search(query.pdf_path == self.pdf_path):
+            print("Documento já inserido")
+            return
 
         if not self.text:
             self.extract_text()
+
         texto_formatado = self.preprocess_text()
         dates = self.extract_publication_date(texto_formatado)
         classification = self.classification(texto_formatado)
@@ -163,6 +171,7 @@ class ProcessorService:
 
         for i, document in enumerate(self.doc_array):
             pdf_path = document.tags.get("path")
+
             if pdf_path:
                 date = dates[i] if i < len(dates) else None
                 infos_return = {
@@ -174,14 +183,14 @@ class ProcessorService:
                     "resolution": resolution,
                 }
             
-            self.db.insert(infos_return)
-            empty_pdfinfo = self.see_empty_values(infos_return)
+                self.db.insert(infos_return)
 
-        return empty_pdfinfo
+        return {'data': 'Todos os documentos foram inseridos'}
 
     def see_empty_values(self, pdf_info):
         for valor in pdf_info.items():
             if valor[1] is None:
                 print(f"O documento {pdf_info['pdf_path']} não tem um dos valores preenchidos")
-                return pdf_info
+                self.db_none.insert(pdf_info)
+
 
