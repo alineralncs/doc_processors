@@ -3,6 +3,7 @@ import re
 import PyPDF2
 import spacy
 from docarray import DocumentArray
+from tinydb import TinyDB, Query
 
 nlp = spacy.load("pt_core_news_sm")
 
@@ -11,6 +12,7 @@ class ProcessorService:
     def __init__(self, doc_array: DocumentArray):
         self.doc_array = doc_array  # path to the pdf file
         self.text = ""
+        self.db = TinyDB('db.json')
 
     def extract_text(self) -> str:
         for document in self.doc_array:
@@ -148,10 +150,8 @@ class ProcessorService:
         else:
             return None
 
-        pass
-
     def combination(self):
-        # combinar as funções de extração
+        empty_pdfinfo = []
 
         if not self.text:
             self.extract_text()
@@ -173,5 +173,15 @@ class ProcessorService:
                     "signature": signature,
                     "resolution": resolution,
                 }
+            
+            self.db.insert(infos_return)
+            empty_pdfinfo = self.see_empty_values(infos_return)
 
-        return infos_return
+        return empty_pdfinfo
+
+    def see_empty_values(self, pdf_info):
+        for valor in pdf_info.items():
+            if valor[1] is None:
+                print(f"O documento {pdf_info['pdf_path']} não tem um dos valores preenchidos")
+                return pdf_info
+

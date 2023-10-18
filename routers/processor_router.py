@@ -1,3 +1,4 @@
+import json
 import os
 
 from docarray import Document, DocumentArray
@@ -7,6 +8,12 @@ from .processor_service import ProcessorService
 
 router = APIRouter()
 
+@router.get("/db")
+def get_all_documents():
+    with open('db.json', 'r') as db:
+        db = json.load(db)
+    
+    return {"db": db}
 
 @router.get("/preprocess")
 def preprocess_documents():
@@ -28,8 +35,5 @@ def preprocess_documents():
                     processor_service = ProcessorService(doc_array)
 
                     results.append(processor_service.combination())
-    for x in results:
-        print(x)
-        print('\n\n\n')
 
     return {"results": results}
