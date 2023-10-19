@@ -14,6 +14,7 @@ class ProcessorService:
         self.text = ""
         self.db = TinyDB('db.json')
         self.pdf_path = pdf_path
+        self.query = Query()
 
     def extract_text(self) -> str:
         for document in self.doc_array:
@@ -152,11 +153,7 @@ class ProcessorService:
             return None
 
     def combination(self):
-
-        # Verificando se o documento já existe.
-        query = Query()
-
-        if self.db.search(query.pdf_path == self.pdf_path):
+        if self.db.search(self.query.pdf_path == self.pdf_path):
             print("Documento já inserido")
             return
 
@@ -186,11 +183,3 @@ class ProcessorService:
                 self.db.insert(infos_return)
 
         return {'data': 'Todos os documentos foram inseridos'}
-
-    def see_empty_values(self, pdf_info):
-        for valor in pdf_info.items():
-            if valor[1] is None:
-                print(f"O documento {pdf_info['pdf_path']} não tem um dos valores preenchidos")
-                self.db_none.insert(pdf_info)
-
-

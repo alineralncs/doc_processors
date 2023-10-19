@@ -15,6 +15,21 @@ def get_all_documents():
         db = json.load(db)
         return db
     
+@router.get("/db-none")
+def get_all_documents_with_some_value_none():
+    results = []
+    db = TinyDB('db.json')
+    entradas = db.all()
+
+    for entrada in entradas:
+        for chave, valor in entrada.items():
+            if valor is None:
+                results.append(entrada)
+                print(f"Encontrou um valor None na entrada: {entrada}")
+                break  
+    db.close()
+    return results
+    
 @router.get("/preprocess")
 def preprocess_documents():
     root_directory = "documents_new"
