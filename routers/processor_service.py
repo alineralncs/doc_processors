@@ -3,7 +3,7 @@ import re
 import PyPDF2
 import spacy
 from docarray import DocumentArray
-
+import logging
 nlp = spacy.load("pt_core_news_sm")
 
 
@@ -34,12 +34,7 @@ class ProcessorService:
         from nltk.corpus import stopwords
 
         stopwords = stopwords.words("portuguese")
-        stopwords_personalizadas = [
-            "universidade federal tocantins",
-            "fundação universidade federal tocantins",
-            "uft",
-            "universidad federal tocantins",
-        ]
+       
         text = ""
         doc = nlp(self.text)
         text_formatted = spacy.tokens.Doc(
@@ -52,7 +47,7 @@ class ProcessorService:
                 and not (
                     token.text.lower() in stopwords and token.text.lower() != "conselho"
                 )
-                and token.text.lower() not in stopwords_personalizadas
+                #and token.text.lower() not in stopwords_personalizadas
             ],
         )
         text_formatted = " ".join([token.text for token in text_formatted])
@@ -60,7 +55,6 @@ class ProcessorService:
 
     def classification(self, text) -> str:
         # classificar o documento dividir entre consiuni e consepe
-
         if "consuni" in text.lower() or "conselho universitário" in text.lower():
             return "Consuni"
         if "consepe" in text.lower() or "conselho ensino" in text.lower():
@@ -72,17 +66,21 @@ class ProcessorService:
         if not self.text:
             self.extract_text()
         datas = []
-        date_pattern = r"palmas\s\d+\s[a-zA-Z]+\s\d{4}"
+        date_pattern = r"\d{1,2} de [a-zA-Z]+ de \d{4}"
+       # date_pattern = r"palmas\s\d+\s[a-zA-Z]+\s\d{4}"
+
         documents = text.split("\n")
         for document in documents:
-            match = re.search(date_pattern, document)
+            
+            match = re.search(date_pattern, document.lower())
             if match:
+                #breakpoint()
                 # verificar demais grupos
-                day = match.group().split(" ")[1]
+                day = match.group().split(" ")[0]
                 # print(day)
                 month = match.group().split(" ")[2]
                 # print(month)
-                year = match.group().split(" ")[3]
+                year = match.group().split(" ")[4]
                 # print(year)
                 month_dict = {
                     "janeiro": "01",
@@ -108,9 +106,15 @@ class ProcessorService:
     def extract_signatures(self, text) -> str:
         # extrair as assinaturas do documento
 
-        prof_pattern = r"prof\s+([a-z]+\s+[a-z]+)\s+presidente"
+        # prof_pattern = r"prof\s+([a-z]+\s+[a-z]+)\s+presidente"
 
-        reitor_pattern = r"[A-Z][A-ZÁ-ÚÉÊÓÔÍ][A-ZÁ-ÚÉÊÓÔÍa-zá-úéêóôí]+\sreitor"
+        # reitor_pattern = r"[A-Z][A-ZÁ-ÚÉÊÓÔÍ][A-ZÁ-ÚÉÊÓÔÍa-zá-úéêóôí]+\sreitor"
+        prof_pattern = r"Prof\.\s[A-Z][a-z]+\s[A-Z][a-z]+"
+        reitor_pattern = r"[A-Z][A-ZÁ-ÚÉÊÓÔÍ][A-ZÁ-ÚÉÊÓÔÍa-zá-úéêóôí]+\sReitor"
+
+        # prof_pattern = r"PROF\s+([a-z]+\s+[a-z]+)\s+PRESIDENTE"
+
+        # reitor_pattern = r"[A-Z][A-ZÁ-ÚÉÊÓÔÍ][A-ZÁ-ÚÉÊÓÔÍa-zá-úéêóôí]+\sREITOR"
 
         professor_match = re.search(prof_pattern, text)
         if professor_match:
@@ -129,45 +133,109 @@ class ProcessorService:
         pass
 
     def remove_unecessary_data(self) -> str:
-        # remover dados desnecessarios do documento
-        pass
+        if not self.text:
+            self.extract_text()
+        texto = self.preprocess_text()
+        unecessary = [
+            "universidade federal tocantins",
+            "fundação universidade federal tocantins",
+            "uft",
+            "universidad federal tocantins",
+        ]
+        for word in unecessary:
+            texto = texto.replace(word, "")
+            #print(texto)
+        return texto
 
+
+
+    def get_pdf_path(self) -> str:
+        for i, document in enumerate(self.doc_array):
+            pdf_path = document.tags.get("path")
+            return pdf_path
+
+    def extract_title(self) -> str:
+        # extrair o título do documento
+        pdf_path = self.get_pdf_path()
+        pattern = r'(?:.*\\){3}(.*)'
+        match = re.search(pattern, pdf_path)
+        title = match.group(1)
+        return title
+        
     def extract_resolutions(self, text) -> str:
         # extrair as resoluções do documento
         # pattern = r"N[º°]\s?\d+\s*/\s*\d+"
         pattern = r"[Nn]\s?[º°]\s?\d+\s*/\s*\d+"
-        match = re.search(pattern, text, re.IGNORECASE)
+        match = re.search(pattern, text.lower(), re.IGNORECASE)
 
         if match:
             resolution_number = match.group()
             return resolution_number
         else:
-            return None
+            pattern = r"N[º°]\s\d{3}/\d{4}"
+            match = re.search(pattern, text.lower(), re.IGNORECASE)
+            return match.group() if match else None
 
         pass
 
-    def combination(self):
-        # combinar as funções de extração
-
+    def remove_resolution_str(self, text) -> str:
+        # remover a string de resolução do texto
         if not self.text:
             self.extract_text()
+        
         texto_formatado = self.preprocess_text()
-        dates = self.extract_publication_date(texto_formatado)
-        classification = self.classification(texto_formatado)
-        signature = self.extract_signatures(texto_formatado)
-        resolution = self.extract_resolutions(texto_formatado)
+        
+        resolution = self.extract_resolutions(text)
+       
+        pattern = r'\d+/+\d+'
+        if resolution:
+            match = re.search(pattern, resolution) 
+        
+            if match:
+                resolution_number = match.group()
+                return resolution_number
+            else:
+                return None   
+    
+    def combination(self):
+
+        dic_null = []
 
         for i, document in enumerate(self.doc_array):
             pdf_path = document.tags.get("path")
             if pdf_path:
+                if not self.text:
+                    self.extract_text()
+                texto = self.extract_text()
+                dates = self.extract_publication_date(texto)
+                classification = self.classification(texto)
+                signature = self.extract_signatures(texto)
+                texto_formatado_ = self.remove_unecessary_data()
+                resolution = self.remove_resolution_str(texto) if self.remove_resolution_str(texto) else None
+                title =  self.extract_title(),
+     
+                
                 date = dates[i] if i < len(dates) else None
                 infos_return = {
+                    "title": title,
                     "pdf_path": pdf_path,
-                    "texto": texto_formatado,
+                   # "text": texto_formatado_,
                     "dates": date,
                     "classification": classification,
                     "signature": signature,
                     "resolution": resolution,
                 }
+                if any(value is None for value in infos_return.values()):
+                    dic_null.append(infos_return)
+    
+            if dic_null:
+                    logging.info("-----------------")
+                    logging.info(f"Valores nulos no documento {title}:")
+                    for i, item in enumerate(dic_null, start=1):
+                        for key, value in item.items():
+                            if value is None:
+                                logging.info(f"{i}. Atributo: {key}")
+                    
+    
 
         return infos_return

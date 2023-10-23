@@ -1,5 +1,6 @@
 import os
 
+import logging
 from docarray import Document, DocumentArray
 from fastapi import APIRouter
 
@@ -11,6 +12,7 @@ router = APIRouter()
 @router.get("/preprocess")
 def preprocess_documents():
     root_directory = "documents_test"
+   # global results_g
     results = []
     # chamar funcao de pre processamento
     for year in range(2004, 2015):
@@ -27,7 +29,19 @@ def preprocess_documents():
                     doc_array.append(Document(path=pdf_path))
 
                     processor_service = ProcessorService(doc_array)
-
+                    
                     results.append(processor_service.combination())
+    cont_null = 0     
+    null_attributes = []      
+    for item in results:
+        #breakpoint()
+        for key, value in item.items():
+            if value is None:
+                #breakpoint()
+                cont_null += 1
+                null_attributes.append(key)
 
+    logging.info(f"Existem {cont_null} valores nulos em todos os documentos.")
+    logging.info(f"Os atributos nulos sao: {null_attributes}")
+                #results = results_g
     return {"results": results}

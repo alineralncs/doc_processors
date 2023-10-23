@@ -1,0 +1,10 @@
+2023-10-22 12:19:40,687 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-22 12:19:51,887 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-22 12:20:16,490 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-22 12:20:58,079 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-22 12:21:26,771 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-22 12:21:34,856 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-22 12:21:39,440 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-22 12:21:51,868 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-22 12:22:30,723 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-22 12:22:37,324 - asyncio - DEBUG - Using selector: SelectSelector
