@@ -38,6 +38,10 @@ def preprocess_documents():
     for year in range(2014, 2024):
         for folder_name in ["Consuni", "Consepe"]:
             folder_path = os.path.join(root_directory, folder_name, str(year))
+<<<<<<< HEAD
+=======
+            print(folder_path)
+>>>>>>> parent of 957d357 (remocao de stopwords e outros, padronizacao data, add resolucao)
 
             for root, dirs, files in os.walk(folder_path):
                 for filename in files:
