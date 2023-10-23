@@ -47,6 +47,7 @@ class ProcessorService:
         datas = []
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         date_pattern = r"palmas\s\d+\s[a-zA-Z]+\s\d{4}"
         date_pattern_new_documents = r"\d+ (\d{1,2}) ([a-zA-Z]+) (\d{4})"
 
@@ -60,6 +61,8 @@ class ProcessorService:
             print(match)
 
 =======
+=======
+>>>>>>> parent of 957d357 (remocao de stopwords e outros, padronizacao data, add resolucao)
         date_pattern = r"\d{1,2} de [a-zA-Z]+ de \d{4}"
         documents = self.text.split("\n")
         for document in documents:
@@ -97,6 +100,7 @@ class ProcessorService:
         # extrair as resoluções do documento
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         # pattern = r"N[º°]\s?\d+\s*/\s*\d+"
         pattern = r"[Nn]\s?[º°]\s?\d+\s*/\s*\d+"
         match = re.search(pattern, text, re.IGNORECASE)
@@ -107,6 +111,8 @@ class ProcessorService:
         else:
             return None
 =======
+=======
+>>>>>>> parent of 957d357 (remocao de stopwords e outros, padronizacao data, add resolucao)
 =======
 >>>>>>> parent of 957d357 (remocao de stopwords e outros, padronizacao data, add resolucao)
         pass
@@ -121,12 +127,18 @@ class ProcessorService:
             self.extract_text()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         texto_formatado = self.preprocess_text()
         dates = self.extract_publication_date(texto_formatado)
         classification = self.classification(texto_formatado)
         signature = self.extract_signatures(texto_formatado)
         resolution = self.extract_resolutions(texto_formatado)
+=======
+        dates = self.extract_publication_date()
+        classification = self.classification(self.text)
+        signature = self.extract_signatures(self.text)
+>>>>>>> parent of 957d357 (remocao de stopwords e outros, padronizacao data, add resolucao)
 =======
         dates = self.extract_publication_date()
         classification = self.classification(self.text)
