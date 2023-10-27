@@ -22,4 +22,12 @@ app.include_router(content_based_router.router)
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="127.0.0.1", port=8089, reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=8088, reload=True)
+
+
+
+    # user_ip = request.client.host
+    # logging.info(f"User {user_ip} is requesting to preprocess documents")
+    # response = requests.get(f"https://ipinfo.io/{user_ip}/json")
+    # location_data = response.json()
+    # breakpoint()

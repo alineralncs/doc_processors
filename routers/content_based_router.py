@@ -3,12 +3,27 @@ import os
 from docarray import Document, DocumentArray
 from fastapi import APIRouter
 
+import numpy as np
+
 from .content_based_service import ContentBasedRecomendation
 from .processor_service import ProcessorService
 from .content_based_service import ContentBasedRecomendation
 from .processor_router import preprocess_documents
 router = APIRouter()
 
+
+document_features = [
+    {
+        "title": "Documento 1",
+        "documentStatus": 1,
+        "dates": 20220101,
+        "classification": "A",
+        "signature": "John Doe",
+        "resolution": "High",
+    }
+]
+
+feature_matrix = np.array([[doc["documentStatus"], doc["dates"]] for doc in document_features])
 
 @router.get("/available-documents")
 def available_documents():
@@ -20,16 +35,7 @@ def available_documents():
     return {"documents": documents}
     
 @router.post("/content-based-recommender")
-def content_recommender(input_info: dict):
-    try:
-        documents = preprocess_documents()["results"]
-        num_recommendations = input_info["num_recommendations"]
-        content_recommendation = ContentBasedRecomendation(documents)
-        recommendations = content_recommendation.recommend(input_info, num_recommendations)
-
-        return {"recommendations": recommendations}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail="Erro ao gerar recomendações")
+def content_recommender(document: int):
 
 
 

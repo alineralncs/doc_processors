@@ -5,16 +5,15 @@ import spacy
 from dateutil import parser
 from docarray import DocumentArray
 
+import logging
+
 nlp = spacy.load("pt_core_news_sm")
 
 
 class ProcessorService:
-    def __init__(self, doc_array: DocumentArray, pdf_path):
-        self.doc_array = doc_array  # path to the pdf file
-        self.text = ""
-        self.db = TinyDB('db.json')
-        self.pdf_path = pdf_path
-        self.query = Query()
+    def __init__(self, doc_array: DocumentArray):
+            self.doc_array = doc_array  # path to the pdf file
+            self.text = ""
 
     def extract_text(self) -> str:
         for document in self.doc_array:
@@ -85,11 +84,12 @@ class ProcessorService:
             match = re.search(date_pattern, document.lower())
             if match:
                 # verificar demais grupos
-                day = match.group().split(" ")[1]
+
+                day = match.group().split(" ")[0]
                 # print(day)
                 month = match.group().split(" ")[2]
                 # print(month)
-                year = match.group().split(" ")[3]
+                year = match.group().split(" ")[4]
                 # print(year)
                 month_dict = {
                     "janeiro": "01",
@@ -140,6 +140,7 @@ class ProcessorService:
         pass
 
     def remove_unecessary_data(self) -> str:
+        # remover dados desnecessários do documento
         if not self.text:
             self.extract_text()
         texto = self.preprocess_text()
@@ -154,9 +155,29 @@ class ProcessorService:
             #print(texto)
         return texto
 
+    def old_new_classification(self) -> str:
+        # classificar o documento como antigo ou novo
+        resolution = self.extract_resolutions(self.text)
+        if resolution: 
+            parts = resolution.split("/")
+            if len(parts) == 2:
+                year_part = parts[1]
+            try:
+                year = int(year_part)
+            except ValueError:
+                return "Não foi possível determinar a data"
+            if 2004 <= year <= 2015:
+                return "Antigo"
+            elif year >= 2015:
+                return "Novo"
+            else:
+                return "Documento de data desconhecida"
+        else:
+            return "None"
 
 
     def get_pdf_path(self) -> str:
+        # extrair o caminho do documento
         for i, document in enumerate(self.doc_array):
             pdf_path = document.tags.get("path")
             return pdf_path
@@ -166,13 +187,19 @@ class ProcessorService:
         pdf_path = self.get_pdf_path()
         pattern = r'(?:.*\\){3}(.*)'
         match = re.search(pattern, pdf_path)
-        title = match.group(1)
-        return title
+        if match:
+            title = match.group(1)
+            return title
+        else:
+            return None
         
     def extract_resolutions(self, text) -> str:
         # extrair as resoluções do documento 
         # pattern = r"N[º°]\s?\d+\s*/\s*\d+"
         pattern = r"[Nn]\s?[º°]\s?\d+\s*/\s*\d+"
+        #pattern = r"[Nn]\s*[º°]\s{2,}\d{0,2}\s*/\s*\d+"
+
+
         match = re.search(pattern, text.lower(), re.IGNORECASE)
 
         if match:
@@ -202,7 +229,15 @@ class ProcessorService:
                 return resolution_number
             else:
                 return None   
-    
+    def extract_location(self, text) -> str:
+        self.text = text
+        doc = nlp(self.text)
+        locations = []
+        for ent in doc.ents:
+            if ent.label_ == "LOC":
+                locations.append(ent.text)
+        return locations
+
     def combination(self):
 
         dic_null = []
@@ -214,22 +249,26 @@ class ProcessorService:
                 if not self.text:
                     self.extract_text()
                 texto = self.extract_text()
-                dates = self.extract_publication_date(texto)
+
+                dates = self.extract_publication_date()
                 classification = self.classification(texto)
                 signature = self.extract_signatures(texto)
                 texto_formatado_ = self.remove_unecessary_data()
                 resolution = self.remove_resolution_str(texto) if self.remove_resolution_str(texto) else None
                 title =  self.extract_title(),
-     
+                old_new = self.old_new_classification()
                 
                 date = dates[i] if i < len(dates) else None
                 infos_return = {
                     "title": title,
                     "pdf_path": pdf_path,
-                    "texto": texto_formatado,
+                    #"texto": texto_formatado,
+                    "documentStatus": old_new,
                     "dates": date,
                     "classification": classification,
                     "signature": signature,
+                    "resolution": resolution,
+                    # "location_of_document": self.extract_location(texto), 
                 }
                 if any(value is None for value in infos_return.values()):
                     dic_null.append(infos_return)

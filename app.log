@@ -1,10 +1,95 @@
-2023-10-22 12:19:40,687 - asyncio - DEBUG - Using selector: SelectSelector
-2023-10-22 12:19:51,887 - asyncio - DEBUG - Using selector: SelectSelector
-2023-10-22 12:20:16,490 - asyncio - DEBUG - Using selector: SelectSelector
-2023-10-22 12:20:58,079 - asyncio - DEBUG - Using selector: SelectSelector
-2023-10-22 12:21:26,771 - asyncio - DEBUG - Using selector: SelectSelector
-2023-10-22 12:21:34,856 - asyncio - DEBUG - Using selector: SelectSelector
-2023-10-22 12:21:39,440 - asyncio - DEBUG - Using selector: SelectSelector
-2023-10-22 12:21:51,868 - asyncio - DEBUG - Using selector: SelectSelector
-2023-10-22 12:22:30,723 - asyncio - DEBUG - Using selector: SelectSelector
-2023-10-22 12:22:37,324 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-25 18:25:08,992 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:15:36,762 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:17:03,956 - root - INFO - -----------------
+2023-10-26 22:17:03,957 - root - INFO - Valores nulos no documento ('09-2004 - Normas Cerimonial  (ver Resolução Consepe nº 25-2014).pdf',):
+2023-10-26 22:17:03,957 - root - INFO - 1. Atributo: dates
+2023-10-26 22:17:16,276 - root - INFO - Existem 1 valores nulos em todos os documentos.
+2023-10-26 22:17:16,276 - root - INFO - Os atributos nulos sao: ['dates']
+2023-10-26 22:17:56,501 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:18:04,834 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:20:31,625 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:23:28,749 - root - INFO - -----------------
+2023-10-26 22:23:28,749 - root - INFO - Valores nulos no documento ('09-2004 - Normas Cerimonial  (ver Resolução Consepe nº 25-2014).pdf',):
+2023-10-26 22:23:28,749 - root - INFO - 1. Atributo: dates
+2023-10-26 22:23:47,747 - root - INFO - Existem 1 valores nulos em todos os documentos.
+2023-10-26 22:23:47,747 - root - INFO - Os atributos nulos sao: ['dates']
+2023-10-26 22:25:51,588 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:27:06,312 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:30:49,574 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:31:44,355 - root - INFO - -----------------
+2023-10-26 22:31:44,355 - root - INFO - Valores nulos no documento ('09-2004 - Normas Cerimonial  (ver Resolução Consepe nº 25-2014).pdf',):
+2023-10-26 22:31:44,355 - root - INFO - 1. Atributo: dates
+2023-10-26 22:32:05,949 - root - INFO - Existem 1 valores nulos em todos os documentos.
+2023-10-26 22:32:05,949 - root - INFO - Os atributos nulos sao: ['dates']
+2023-10-26 22:32:09,096 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:32:46,650 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:33:05,756 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:33:58,111 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:34:09,041 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:34:18,089 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:34:25,139 - root - INFO - -----------------
+2023-10-26 22:34:25,139 - root - INFO - Valores nulos no documento ('01-2004 - Lista tríplice 2004.pdf',):
+2023-10-26 22:34:25,139 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:34:41,467 - root - INFO - -----------------
+2023-10-26 22:34:41,467 - root - INFO - Valores nulos no documento ('05-2004 - Professores visitantes.pdf',):
+2023-10-26 22:34:41,467 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:35:10,776 - root - INFO - -----------------
+2023-10-26 22:35:10,776 - root - INFO - Valores nulos no documento ('07-2004 - Centro de Idiomas.pdf',):
+2023-10-26 22:35:10,777 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:35:18,350 - root - INFO - -----------------
+2023-10-26 22:35:18,350 - root - INFO - Valores nulos no documento ('09-2004 - Normas Cerimonial  (ver Resolução Consepe nº 25-2014).pdf',):
+2023-10-26 22:35:18,350 - root - INFO - 1. Atributo: dates
+2023-10-26 22:35:18,350 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:35:42,198 - root - INFO - Existem 5 valores nulos em todos os documentos.
+2023-10-26 22:35:42,198 - root - INFO - Os atributos nulos sao: ['resolution', 'resolution', 'resolution', 'dates', 'resolution']
+2023-10-26 22:35:50,347 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:36:48,094 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:38:37,368 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:39:31,304 - root - INFO - -----------------
+2023-10-26 22:39:31,305 - root - INFO - Valores nulos no documento ('01-2004 - Lista tríplice 2004.pdf',):
+2023-10-26 22:39:31,305 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:40:00,972 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:40:02,282 - root - INFO - -----------------
+2023-10-26 22:40:02,283 - root - INFO - Valores nulos no documento ('01-2004 - Lista tríplice 2004.pdf',):
+2023-10-26 22:40:02,283 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:40:13,520 - root - INFO - -----------------
+2023-10-26 22:40:13,520 - root - INFO - Valores nulos no documento ('05-2004 - Professores visitantes.pdf',):
+2023-10-26 22:40:13,521 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:40:42,147 - root - INFO - -----------------
+2023-10-26 22:40:42,147 - root - INFO - Valores nulos no documento ('07-2004 - Centro de Idiomas.pdf',):
+2023-10-26 22:40:42,147 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:40:50,757 - root - INFO - -----------------
+2023-10-26 22:40:50,757 - root - INFO - Valores nulos no documento ('09-2004 - Normas Cerimonial  (ver Resolução Consepe nº 25-2014).pdf',):
+2023-10-26 22:40:50,757 - root - INFO - 1. Atributo: dates
+2023-10-26 22:40:50,757 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:41:09,802 - root - INFO - Existem 5 valores nulos em todos os documentos.
+2023-10-26 22:41:09,802 - root - INFO - Os atributos nulos sao: ['resolution', 'resolution', 'resolution', 'dates', 'resolution']
+2023-10-26 22:41:59,135 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:42:19,642 - asyncio - DEBUG - Using selector: SelectSelector
+2023-10-26 22:42:21,011 - root - INFO - -----------------
+2023-10-26 22:42:21,012 - root - INFO - Valores nulos no documento ('01-2004 - Lista tríplice 2004.pdf',):
+2023-10-26 22:42:21,012 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:42:22,120 - root - INFO - -----------------
+2023-10-26 22:42:22,121 - root - INFO - Valores nulos no documento ('02-2004 - Assembléia Constituinte.pdf',):
+2023-10-26 22:42:22,121 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:42:34,079 - root - INFO - -----------------
+2023-10-26 22:42:34,079 - root - INFO - Valores nulos no documento ('05-2004 - Professores visitantes.pdf',):
+2023-10-26 22:42:34,079 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:43:01,815 - root - INFO - -----------------
+2023-10-26 22:43:01,815 - root - INFO - Valores nulos no documento ('06-2004 - Avaliação Estágio Probatório (Revogada pela Resolução Consuni nº 01-2011).pdf',):
+2023-10-26 22:43:01,815 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:43:02,954 - root - INFO - -----------------
+2023-10-26 22:43:02,954 - root - INFO - Valores nulos no documento ('07-2004 - Centro de Idiomas.pdf',):
+2023-10-26 22:43:02,954 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:43:12,784 - root - INFO - -----------------
+2023-10-26 22:43:12,785 - root - INFO - Valores nulos no documento ('09-2004 - Normas Cerimonial  (ver Resolução Consepe nº 25-2014).pdf',):
+2023-10-26 22:43:12,785 - root - INFO - 1. Atributo: dates
+2023-10-26 22:43:12,785 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:43:18,202 - root - INFO - -----------------
+2023-10-26 22:43:18,202 - root - INFO - Valores nulos no documento ('12-2004 - Regimento Interno Conselho Diretor Campus Araguaína.pdf',):
+2023-10-26 22:43:18,202 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:43:34,757 - root - INFO - -----------------
+2023-10-26 22:43:34,757 - root - INFO - Valores nulos no documento ('14-2004 - Regimento Interno Campus de Palmas (Alterada pelas Resoluções Consuni nºs 13-2007 e  01-2014).pdf',):
+2023-10-26 22:43:34,757 - root - INFO - 1. Atributo: resolution
+2023-10-26 22:43:34,759 - root - INFO - Existem 9 valores nulos em todos os documentos.
+2023-10-26 22:43:34,759 - root - INFO - Os atributos nulos sao: ['resolution', 'resolution', 'resolution', 'resolution', 'resolution', 'dates', 'resolution', 'resolution', 'resolution']
