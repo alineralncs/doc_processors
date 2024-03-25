@@ -42,8 +42,11 @@ class ProcessorService:
             "fundação universidade federal tocantins",
             "uft",
             "universidad federal tocantins",
+       
         ]
         text = ""
+        date_pattern_2 = re.compile(r'\b\d{4}-\d{1,2}\b')
+
         doc = nlp(self.text)
         text_formatted = spacy.tokens.Doc(
             doc.vocab,
@@ -52,13 +55,17 @@ class ProcessorService:
                 for token in doc
                 if not token.is_space
                 and not token.is_punct
+                and not token.like_num
+                and not token.is_bracket
+                and not date_pattern_2.match(token.text)
+                # and not pontuation_pattern.match(token.text)
                 and not (
                     token.text.lower() in stopwords and token.text.lower() != "conselho"
                 )
                 and token.text.lower() not in stopwords_personalizadas
             ],
         )
-        text_formatted = " ".join([token.text for token in text_formatted])
+        text_formatted = " ".join([token.text for token in text_formatted if not token.is_space and not token.is_bracket and not date_pattern_2.match(token.text) and not token.is_punct and not token.like_num and not (token.text.lower() in stopwords and token.text.lower() != "conselho") and token.text.lower() not in stopwords_personalizadas])
         return text_formatted
 
     def classification(self, text) -> str:
@@ -145,10 +152,30 @@ class ProcessorService:
             self.extract_text()
         texto = self.preprocess_text()
         unecessary = [
+            "universidade", 
+            "federal",
+            "tocantins",
             "universidade federal tocantins",
             "fundação universidade federal tocantins",
             "uft",
             "universidad federal tocantins",
+            "art",
+            ".",
+            "°",
+            "º",
+            "conselho",
+            "universitario",
+            "ensino",
+            "pesquisa",
+            "extensao",
+            "reitor",
+            "vice-reitor",
+            "edu", 
+            "br",
+            "uft", 
+            "https"
+
+
         ]
         for word in unecessary:
             texto = texto.replace(word, "")
@@ -197,6 +224,11 @@ class ProcessorService:
         # extrair as resoluções do documento 
         # pattern = r"N[º°]\s?\d+\s*/\s*\d+"
         pattern = r"[Nn]\s?[º°]\s?\d+\s*/\s*\d+"
+        # pattern_art = r"\b[aA][rR][tT]\b"
+        # pattern_uft = r"\b[uU][fF][tT]\b"
+        # pattern_edu = r"\b[eE][dD][uU]\b"
+
+        
         #pattern = r"[Nn]\s*[º°]\s{2,}\d{0,2}\s*/\s*\d+"
 
 
@@ -258,11 +290,12 @@ class ProcessorService:
                 title =  self.extract_title(),
                 old_new = self.old_new_classification()
                 
+                
                 date = dates[i] if i < len(dates) else None
                 infos_return = {
                     "title": title,
                     "pdf_path": pdf_path,
-                    #"texto": texto_formatado,
+                    "texto": self.text,
                     "documentStatus": old_new,
                     "dates": date,
                     "classification": classification,

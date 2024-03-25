@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import logging
 
-from routers import processor_router, content_based_router
+from routers import processor_router, content_based_router, semantic_router
 
 logging.basicConfig(
     filename='app.log',      
@@ -10,6 +10,7 @@ logging.basicConfig(
 )
 app = FastAPI()
 
+#app.add_middleware(DBSessionMiddleware, db_url=SQLALCHEMY_DATABASE_URL)
 
 @app.get("/")
 async def root():
@@ -18,11 +19,11 @@ async def root():
 
 app.include_router(processor_router.router)
 app.include_router(content_based_router.router)
-    
+app.include_router(semantic_router.router)
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="127.0.0.1", port=8088, reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=8096, reload=True)
 
 
 
